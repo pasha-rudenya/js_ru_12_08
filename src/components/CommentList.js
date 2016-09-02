@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Comment from './Comment'
 import toggleOpen from '../decorators/toggleOpen'
 import CommentCount from './CommentCount'
+import AddComment from './AddComment'
 
 class CommentList extends Component {
     static propTypes = {
@@ -9,20 +10,6 @@ class CommentList extends Component {
         isOpen: PropTypes.bool,
         toggleOpen: PropTypes.func
     }
-
-/*
-    componentDidMount() {
-        console.log('---', 'mounted')
-    }
-
-    componentWillUnmount() {
-        console.log('---', 'unmounting')
-    }
-
-    componentWillReceiveProps() {
-        console.log('---', 'updating')
-    }
-*/
 
     render() {
         const { comments, isOpen, toggleOpen } = this.props
@@ -40,6 +27,7 @@ class CommentList extends Component {
             <div>
                 {toggleButton}
                 <ul>{commentItems}</ul>
+                <AddComment />
             </div>
         )
     }
