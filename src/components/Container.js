@@ -29,7 +29,7 @@ export default connect((state) => {
     const selected = filters.get('selected')
     const dates = filters.get('dates')
 
-    const filteredArticles = articles
+    const filteredArticles = articles.valueSeq()
         .filter(article => !selected.length || selected.includes(article.id))
         .filter(article => {
             const publisingDate = Date.parse(article.date)

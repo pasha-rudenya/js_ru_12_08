@@ -4,7 +4,7 @@ import { Record, List } from 'immutable'
 
 const CommentModel = new Record({
     id: null,
-    user: '',
+    user: null,
     text: ''
 })
 
@@ -15,7 +15,7 @@ export default (comments = immutableComments, action) => {
 
     switch (type) {
         case ADD_COMMENT:
-            return comments.map(payload.item)
+            return comments.push({...payload.comment, id: action.randomId})
     }
 
     return comments

@@ -2,19 +2,34 @@ import React, { Component, PropTypes } from 'react'
 import Comment from './Comment'
 import toggleOpen from '../decorators/toggleOpen'
 import CommentCount from './CommentCount'
-import AddComment from './AddComment'
+import NewCommentForm from './NewCommentForm'
 
 class CommentList extends Component {
     static propTypes = {
-        comments: PropTypes.array,
+        article: PropTypes.object,
         isOpen: PropTypes.bool,
         toggleOpen: PropTypes.func
     }
 
-    render() {
-        const { comments, isOpen, toggleOpen } = this.props
+/*
+    componentDidMount() {
+        console.log('---', 'mounted')
+    }
 
-        if (!comments || !comments.length) return <p>No comments yet</p>
+    componentWillUnmount() {
+        console.log('---', 'unmounting')
+    }
+
+    componentWillReceiveProps() {
+        console.log('---', 'updating')
+    }
+*/
+
+    render() {
+        const { article, isOpen, toggleOpen } = this.props
+        const comments = article.comments
+
+        if (!comments || !comments.length) return <div>No comments yet <NewCommentForm articleId = {article.id}/></div>
         const toggleButton = <a href="#" onClick = {toggleOpen}>{isOpen ? 'hide' : 'show'} comments.
             <CommentCount count = {comments.length}/>
         </a>
@@ -27,7 +42,7 @@ class CommentList extends Component {
             <div>
                 {toggleButton}
                 <ul>{commentItems}</ul>
-                <AddComment />
+                <NewCommentForm articleId = {article.id} />
             </div>
         )
     }

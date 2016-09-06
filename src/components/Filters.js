@@ -8,10 +8,10 @@ import { changeSelectedFilter, changeDateFilter } from '../AC/filters'
 class Filters extends Component {
     render() {
         const { articles, filters, changeDateFilter } = this.props
-        const options = articles.map(article => ({
+        const options = articles.valueSeq().map(article => ({
             label: article.title,
             value: article.id
-        }))
+        })).toJS()
 
         return (
             <div>
