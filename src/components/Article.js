@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import CommentList from './CommentList'
 import toggleOpen from '../decorators/toggleOpen'
 import { connect } from 'react-redux'
-import { deleteArticle } from '../AC/articles'
+import { deleteArticle, loadArticleById } from '../AC/articles'
 
 class Article extends Component {
 /*
@@ -21,9 +21,14 @@ class Article extends Component {
         toggleOpen: PropTypes.func
     }
 
+    componentWillReceiveProps({ isOpen, loadArticleById, article }) {
+        if (isOpen && !this.props.isOpen) loadArticleById(article.id)
+    }
+
     render() {
         const { article, isOpen, toggleOpen } = this.props
         const { text, title } = article
+        if (article.loading) return <h1>Loading...</h1>
         const body = isOpen ? <section>{text}<CommentList article = {article}/></section> : null
         return (
             <div>
@@ -41,4 +46,4 @@ class Article extends Component {
     }
 }
 
-export default connect(null, { deleteArticle })(Article)
+export default connect(null, { deleteArticle, loadArticleById })(Article)
