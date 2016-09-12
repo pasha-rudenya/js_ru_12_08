@@ -25,6 +25,6 @@ Comment.propTypes = {
 
 export default connect(({ comments }, props) => {
     return {
-        comment: comments.find(comment => comment.id == props.commentId)
+        comment: comments.getIn(['entities', props.commentId])
     }
 })(Comment)

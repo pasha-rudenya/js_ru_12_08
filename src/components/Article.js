@@ -21,14 +21,10 @@ class Article extends Component {
         toggleOpen: PropTypes.func
     }
 
-    componentWillReceiveProps({ isOpen, loadArticleById, article }) {
-        if (isOpen && !this.props.isOpen) loadArticleById(article.id)
-    }
-
     render() {
         const { article, isOpen, toggleOpen } = this.props
+        if (!article || article.loading) return <h1>Loading...</h1>
         const { text, title } = article
-        if (article.loading) return <h1>Loading...</h1>
         const body = isOpen ? <section>{text}<CommentList article = {article}/></section> : null
         return (
             <div>

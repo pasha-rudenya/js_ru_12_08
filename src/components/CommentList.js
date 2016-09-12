@@ -3,8 +3,8 @@ import Comment from './Comment'
 import toggleOpen from '../decorators/toggleOpen'
 import CommentCount from './CommentCount'
 import NewCommentForm from './NewCommentForm'
-import { connect } from 'react-redux'
 import { loadComments } from '../AC/comments'
+import { connect } from 'react-redux'
 
 class CommentList extends Component {
     static propTypes = {
@@ -13,35 +13,34 @@ class CommentList extends Component {
         toggleOpen: PropTypes.func
     }
 
-
-    componentDidMount() {
-        const { loaded, loading, loadComments, article, savedComments } = this.props
-        if (!loaded && !loading) loadComments(article.id)
-   }
 /*
+    componentDidMount() {
+        console.log('---', 'mounted')
+    }
+
     componentWillUnmount() {
         console.log('---', 'unmounting')
     }
 
-    componentWillReceiveProps() {
-        console.log('---', 'updating')
-    }
 */
+    componentWillReceiveProps({ isOpen, loadComments, article: { id, commentsLoading, commentsLoaded } }) {
+        if (commentsLoaded || commentsLoading) return
+        if (isOpen && !this.props.isOpen) loadComments(id)
+    }
 
     render() {
-        const { article, isOpen, toggleOpen, savedComments, loading } = this.props
-        console.log(savedComments)
+        const { article, isOpen, toggleOpen } = this.props
+        const { comments, commentsLoaded } = article
 
-        if(loading) return <h1>Loading...</h1>
-
-        if (!savedComments || !savedComments.size) return <div>No comments yet <NewCommentForm articleId = {article.id}/></div>
+        if (!comments || !comments.length) return <div>No comments yet <NewCommentForm articleId = {article.id}/></div>
         const toggleButton = <a href="#" onClick = {toggleOpen}>{isOpen ? 'hide' : 'show'} comments.
-            <CommentCount count = {savedComments.size}/>
+            <CommentCount count = {comments.length}/>
         </a>
 
         if (!isOpen) return <div>{toggleButton}</div>
+        if (!commentsLoaded) return <div>{toggleButton}<h1>Loading...</h1></div>
 
-        const commentItems = savedComments.map(commentId => <li key = {commentId}><Comment commentId = {commentId} /></li>)
+        const commentItems = comments.map(commentId => <li key = {commentId}><Comment commentId = {commentId} /></li>)
 
         return (
             <div>
@@ -53,14 +52,4 @@ class CommentList extends Component {
     }
 }
 
-export default connect((state) => {
-    const { comments } = state
-
-    const savedComments = comments.get('entities')
-    const loading = comments.get('loading')
-    const loaded = comments.get('loaded')
-
-    return { loading, loaded, savedComments }
-}, {
-    loadComments: loadComments
-})(toggleOpen(CommentList))
+export default connect(null, { loadComments })(toggleOpen(CommentList))

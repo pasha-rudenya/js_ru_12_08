@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ArticleList from './ArticleList'
 import JqueryComponent from './JqueryComponent'
-import Counter from './Counter'
 import { findDOMNode } from 'react-dom'
 import { connect } from 'react-redux'
 import Filters from './Filters'
@@ -19,17 +18,9 @@ class Container extends Component {
         const { loading, articles } = this.props
         return (
             <div>
-                <Counter />
-                <Filters />
                 <ArticleList articles = {articles} loading = {loading}/>
-                <JqueryComponent items = {articles} ref={this.getJQ}/>
             </div>
         )
-    }
-
-    getJQ = (ref) => {
-        this.jqRef = ref
-//        console.log('---', findDOMNode(ref))
     }
 }
 
