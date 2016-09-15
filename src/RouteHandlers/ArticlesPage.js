@@ -6,9 +6,30 @@ class ArticlesPage extends Component {
 
     };
 
+    state = {
+        user: ''
+    }
+
+    handleChange = ev => {
+        this.setState({
+            user: ev.target.value
+        })
+    }
+
+    static childContextTypes = {
+        user: PropTypes.string
+    }
+
+    getChildContext() {
+        return {
+            user: this.state.user
+        }
+    }
+
     render() {
         return (
             <div>
+                <input value = {this.state.user} onChange = {this.handleChange} />
                 <div className = "left-bar">
                     <ArticleListContainer />
                 </div>

@@ -8,8 +8,11 @@ class NewCommentForm extends Component {
     };
 
     state = {
-        user: '',
         text: '',
+    }
+
+    static contextTypes = {
+        user: PropTypes.string
     }
 
     render() {
@@ -17,7 +20,6 @@ class NewCommentForm extends Component {
             <div>
                 <form onSubmit = {this.handleSubmit}>
                     text: <input value = {this.state.text} onChange = {this.handleChange('text')} />
-                    user: <input value = {this.state.user} onChange = {this.handleChange('user')} />
                     <input type = 'submit' />
                 </form>
             </div>
@@ -33,7 +35,9 @@ class NewCommentForm extends Component {
     handleSubmit = ev => {
         ev.preventDefault()
         const { addComment, articleId } = this.props
-        addComment(this.state, articleId)
+        const { user } = this.context
+        const { text } = this.state
+        addComment({ user, text }, articleId)
 
         this.setState({
             text: ''

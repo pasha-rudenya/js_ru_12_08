@@ -21,6 +21,11 @@ class Article extends Component {
         toggleOpen: PropTypes.func
     }
 
+    static contextTypes = {
+        store: PropTypes.object,
+        router: PropTypes.object
+    }
+
     render() {
         const { article, isOpen, toggleOpen } = this.props
         if (!article || article.loading) return <h1>Loading...</h1>

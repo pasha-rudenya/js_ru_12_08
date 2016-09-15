@@ -10,18 +10,26 @@ class ArticleList extends Component {
         loading: PropTypes.bool,
     }
 
+    static contextTypes = {
+        user: PropTypes.string,
+        router: PropTypes.object
+    }
+
     render() {
         const { articles, loading } = this.props
         if (loading) return <h1>Loading...</h1>
 
         const articleItems = articles.map(articleObject =>
-            <li key = {articleObject.id}>
-                <Link to = {`/articles/${articleObject.id}`} >{articleObject.title}</Link>
+            <li key = {articleObject.id} style = {{color: this.context.router.isActive(`/articles/${articleObject.id}`) ? 'red' : 'black'}}>
+                <Link to = {`/articles/${articleObject.id}`}>{articleObject.title}</Link>
             </li>)
         return (
-            <CSSTransition component="ul" transitionName="article" transitionLeaveTimeout ={1000} transitionEnterTimeout = {500}>
-                {articleItems}
-            </CSSTransition>
+            <div>
+                {this.context.user}
+                <CSSTransition component="ul" transitionName="article" transitionLeaveTimeout ={1000} transitionEnterTimeout = {500}>
+                    {articleItems}
+                </CSSTransition>
+            </div>
         )
     }
 }

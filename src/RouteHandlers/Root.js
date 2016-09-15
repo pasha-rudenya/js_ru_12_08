@@ -9,14 +9,13 @@ class Root extends Component {
     };
 
     render() {
-        console.log('---', this.props)
         return (
             <Provider store = {store}>
                 <div>
                     <ul>
-                        <li><Link to="/articles">articles</Link></li>
-                        <li><Link to="/filters">filters</Link></li>
-                        <li><Link to="/counter">counter</Link></li>
+                        <li><Link to="/articles" activeStyle = {{color: 'red'}} activeClassName = "active">articles</Link></li>
+                        <li><Link to="/filters" activeStyle = {{color: 'red'}} activeClassName = "active">filters</Link></li>
+                        <li><Link to="/counter" activeStyle = {{color: 'red'}} activeClassName = "active">counter</Link></li>
                     </ul>
                     {this.props.children}
                 </div>
