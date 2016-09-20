@@ -40,4 +40,4 @@ export default connect((state) => {
     const loaded = articles.get('loaded')
 
     return { articles: filteredArticles, loading, loaded }
-}, { loadAllArticles, loadArticlesWithThunk }, null, false)(Container)
+}, { loadAllArticles, loadArticlesWithThunk }, null, { pure: false })(Container)

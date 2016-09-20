@@ -10,7 +10,6 @@ class CommentCount extends Component {
     }
 
     render() {
-        console.log('---', 'rerendering')
         return (
             <strong>
                 {this.props.count}
